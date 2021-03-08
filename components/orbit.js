@@ -24,6 +24,7 @@ module.exports = {
     getActivities: (type) => {
         return new Promise (async (resolve, reject) => {
             try {
+                console.log('fetching get activies custom:stackoverflow:question');
                 const { data } = await axios({
                     url: `${baseURL}/${process.env.ORBIT_WS}/activities?type=${type}&items=500`,
                     method: 'GET',
