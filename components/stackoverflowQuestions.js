@@ -12,10 +12,10 @@ module.exports = {
         const terms = process.env.STACK_TERMS.split(',')
         cron.schedule('* * * * *', async () => {
             const d = new Date()
-            d.setHours(0, 0, 0, 0)
+            d.setHours(0, 5, 0, 0)
 
             for(let term of terms) {
-                console.log(`checking for new questions in export for date ${d}`);
+                console.log(`checking for new questions with ${term} in export for date ${d}`);
                 await checkForNewQuestions(term, d)
             }
         })
