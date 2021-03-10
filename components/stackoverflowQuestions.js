@@ -10,11 +10,13 @@ const so = new stackexchange({ version: 2.2 })
 module.exports = {
     init: async () => {
         const terms = process.env.STACK_TERMS.split(',')
-        cron.schedule('* * * * *', async () => {
-            const d = new Date()
-            d.setHours(0, 5, 0, 0)
+        cron.schedule('*/30 * * * *', async () => {
+            var d = new Date()
+            const now = new Date()
+            d.setHours(0, 0, 0, 0)
 
             for(let term of terms) {
+                console.log(now.toUTCString())
                 console.log(`checking for new questions with ${term} in export for date ${d}`);
                 await checkForNewQuestions(term, d)
             }
