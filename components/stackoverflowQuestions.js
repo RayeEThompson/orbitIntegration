@@ -10,14 +10,13 @@ const so = new stackexchange({ version: 2.2 })
 module.exports = {
     init: async () => {
         const terms = process.env.STACK_TERMS.split(',')
-        cron.schedule('*/30 * * * *', async () => {
+        cron.schedule('0 */4 * * *', async () => {
             var d = new Date()
             const now = new Date()
             d.setHours(0, 0, 0, 0)
 
             for(let term of terms) {
-                console.log(now.toUTCString())
-                console.log(`checking for new questions with ${term} in export for date ${d}`);
+                console.log(`checking for new questions with ${term} tag for date `, now.toUTCString());
                 await checkForNewQuestions(term, d)
             }
         })
@@ -38,7 +37,6 @@ const checkForNewQuestions = async (tag, date) => {
 
 const getNewQuestions = async (tag, date) => {
     return new Promise(async (resolve, reject) => {
-        console.log('getting new questions function');
         const existing = await getExistingQuestions()
         const soQuestions = await getAllSOQuestions(tag, date)
         const newQuestions = soQuestions.filter(soItem => {
@@ -110,7 +108,6 @@ const getExtraDataFromSOQuestion = question => {
 
 const getExistingQuestions = () => {
     return new Promise(async (resolve, reject) => {
-        console.log('about to hop into get activities in orbit.js');
         const { data: activities } = await orbit.getActivities('custom:stackoverflow:question')
         resolve(activities)
     })
@@ -123,6 +120,9 @@ const addNewQuestionsToOrbit = items => {
             items.length = 120
         }
         for(let item of items) {
+            console.log('Owner:', item.owner.display_name);
+            console.log('Title:', item.title);
+            console.log('Link:', item.link);
             await orbit.addActivity({
                 activity: {
                     title: 'Posted a Question on StackOverflow',
