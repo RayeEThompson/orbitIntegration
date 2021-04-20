@@ -10,7 +10,7 @@ const so = new stackexchange({ version: 2.2 })
 module.exports = {
     init: async () => {
         const terms = process.env.STACK_TERMS.split(',')
-        cron.schedule('* * * * *', async () => {
+        cron.schedule('0 */3 * * *', async () => {
             var d = new Date()
             const now = new Date()
             d.setHours(0, 0, 0, 0)

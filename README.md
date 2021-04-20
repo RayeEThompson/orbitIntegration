@@ -2,6 +2,8 @@
 
 # Enter Our Orbit
 
+This is the live version
+
 An express application which ingests the following data into [Orbit](https://orbit.love):
 
 * Active participants in Twitch stream chat
