@@ -10,7 +10,7 @@ const so = new stackexchange({ version: 2.2 })
 module.exports = {
     init: async () => {
         const terms = process.env.STACK_TERMS.split(',')
-        cron.schedule('0 */4 * * *', async () => {
+        cron.schedule('* * * * *', async () => {
             var d = new Date()
             const now = new Date()
             d.setHours(0, 0, 0, 0)
@@ -123,6 +123,7 @@ const addNewQuestionsToOrbit = items => {
             console.log('Owner:', item.owner.display_name);
             console.log('Title:', item.title);
             console.log('Link:', item.link);
+            // console.log(item);
             await orbit.addActivity({
                 activity: {
                     title: 'Posted a Question on StackOverflow',
@@ -135,7 +136,7 @@ const addNewQuestionsToOrbit = items => {
                 },
                 identity: {
                     source: 'StackOverflow',
-                    source_host: `https://stackoverflow.com`,
+                    source_host: `stackoverflow.com`,
                     username: item.owner.user_id,
                     url: `https://stackoverflow.com/users/${item.owner.user_id}`
                 },
